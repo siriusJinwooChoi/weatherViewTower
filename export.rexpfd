@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<rexpfd>
+    <destination path="jinwoo-PC.homePi(wifi):/home/pi/project/weatherPro"/>
+    <options createDirectoryStructure="false" createSelectedOnly="true" descriptionFilePath="/weatherPro/export.rexpfd" overWriteExistingFiles="false" reviewSynchronize="true" saveSettings="true"/>
+    <selectedElements>
+        <project name="weatherPro"/>
+    </selectedElements>
+</rexpfd>

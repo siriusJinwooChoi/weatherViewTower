@@ -1,0 +1,309 @@
+<!-- 
+Made by : Jinwoo Choi,
+Location : Suwon, Korea.
+Date    : 2016.04.12
+Major   : Hankuk University of Foreign Studies, ICE(Information Communication Engineering,  201003629
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/views/bootstrap.min.css" rel="stylesheet">
+<link href="/views/onoffswitch.css" rel="stylesheet">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0-alpha.2/jquery.mobile-1.4.0-alpha.2.min.css">
+
+<title>RealTime Weather ViewTower</title>
+
+<script src="/jqwidgets/jquery-2.1.4.js"></script>
+<script src="/jqwidgets/bootstrap.min.js"></script>
+<script type="text/javascript" src="/jqwidgets/holder.js"></script>
+
+<!--  LED제어를 위한 socket 연동 -->
+<script src="/socket.io/socket.io.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$('#sunviewing').click(function(){
+		var url = "/diview.do?id=0";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#cloudviewing').click(function(){
+		var url = "/diview.do?id=1";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#rainviewing').click(function(){
+		var url = "/diview.do?id=2";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#snowviewing').click(function(){
+		var url = "/diview.do?id=3";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#thunderviewing').click(function(){
+		var url = "/diview.do?id=4";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#drizzleviewing').click(function(){
+		var url = "/diview.do?id=5";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#extremeviewing').click(function(){
+		var url = "/diview.do?id=6";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+});
+</script>
+
+<style type="text/css">
+.carousel {
+	height: 700px;
+	margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+	z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+	height: 700px;
+	background-color: #777;
+}
+
+.carousel-inner>.item>img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	height: 700px;
+}
+</style>
+</head>
+
+<body>
+	<div class="container-f">
+
+		<!-- 네비게이션 메뉴들 구성(navibar_fixed) -->
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">네비게이션 메뉴</span> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">RealTime Weather ViewTower(Choi_Jinwoo)</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="index.html">Home</a></li>
+					<li class="dropdown"><a href="box.html" class="dropdown-toggle"
+						data-toggle="dropdown">날씨 정보<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="box.html">전체 날씨 정보</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- carosel에 대한 부분입니다. -->
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+				<li data-target="#myCarousel" data-slide-to="3"></li>
+				<li data-target="#myCarousel" data-slide-to="4"></li>
+				<li data-target="#myCarousel" data-slide-to="5"></li>
+				<li data-target="#myCarousel" data-slide-to="6"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="item active">
+					<img src="/caroimg/sun.jpg" alt="First slide">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>맑음</h1>
+							<p>맑음에 대한 View-Tower 내부를 제어합니다.</p>
+							<p>
+								<a id="sunviewing" href="#mylogin" data-toggle="modal" class="btn btn-lg btn-primary" role="button">맑음
+									날씨 보기</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="item">
+					<img src="/caroimg/cloud.jpg" alt="Second slide">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>흐림</h1>
+							<p>흐림에 대한 View-Tower 내부를 제어합니다.</p>
+							<p>
+								<a id="cloudviewing" class="btn btn-lg btn-primary" href="#" role="button">흐림
+									날씨 보기</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="item">
+					<img src="/caroimg/thunder.jpg" alt="Third slide">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>천둥/번개</h1>
+							<p>천둥/번개에 대한 View-Tower 내부를 제어합니다.</p>
+							<p>
+								<a id="thunderviewing" class="btn btn-lg btn-primary" href="#" role="button">천둥/번개
+									날씨 보기</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="item">
+					<img src="/caroimg/rain.jpg" alt="Fourth slide">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>비</h1>
+							<p>비에 대한 View-Tower 내부를 제어합니다.</p>
+							<p>
+								<a id="rainviewing" class="btn btn-lg btn-primary" href="#" role="button">비
+									날씨 보기</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="item">
+					<img src="/caroimg/drizzle.jpg" alt="Fifth slide">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>안개</h1>
+							<p>안개에 대한 View-Tower 내부를 제어합니다.</p>
+							<p>
+								<a id="drizzleviewing" class="btn btn-lg btn-primary" href="#" role="button">안개
+									날씨 보기</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="item">
+					<img src="/caroimg/snow.jpg" alt="Sixth slide">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>눈</h1>
+							<p>눈에 대한 View-Tower 내부를 제어합니다.</p>
+							<p>
+								<a id="snowviewing" class="btn btn-lg btn-primary" href="#" role="button">눈
+									날씨 보기</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="item">
+					<img src="/caroimg/extreme.jpg" alt="Seventh slide">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>기상이변</h1>
+							<p>기상이변에 대한 View-Tower 내부를 제어합니다.</p>
+							<p>
+								<a id="extremeviewing" class="btn btn-lg btn-primary" href="#" role="button">기상이변
+									날씨 보기</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span
+				class="glyphicon glyphicon-chevron-left"></span></a> <a
+				class="right carousel-control" href="#myCarousel" data-slide="next"><span
+				class="glyphicon glyphicon-chevron-right"></span></a>
+		</div>
+	</div>
+
+	<!-- 웹 페이지 하단부 구성 -->
+	<footer class="footer-wrapper">
+		<div class="container-fluid footer-bottom">
+			<div class="row">
+				<div class="col-md-6">
+					<p>Copyright &copy; 2016 'Real-time Weather ViewTower' - Project, made by Jinwoo Choi</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

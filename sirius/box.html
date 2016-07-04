@@ -1,0 +1,1414 @@
+<!-- 
+Made by : Jinwoo Choi,
+Location : Suwon, Korea.
+Date    : 2016.04.12
+Major   : Hankuk University of Foreign Studies, ICE(Information Communication Engineering,  201003629
+ -->
+
+<!doctype html>
+<html><head>
+    <meta charset="utf-8">
+    <title>전체 날씨 정보</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+
+    <!-- Le styles -->
+    <link href="./views/css/bootstrap.css" rel="stylesheet">
+    <link href="./views/css/main2.css" rel="stylesheet">
+    <link href="./views/css/font-style.css" rel="stylesheet">
+    <link href="./views/css/flexslider.css" rel="stylesheet">
+    
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript" src="./jqwidgets/bootstrap.js"></script>
+	<!-- <script type="text/javascript" src="./jqwidgets/js/lineandbars.js"></script> -->
+	<!-- <script type="text/javascript" src="./jqwidgets/js/dash-charts.js"></script> -->
+	<script type="text/javascript" src="./jqwidgets/js/gauge.js"></script>
+	
+	<!-- NOTY JAVASCRIPT -->
+	<script type="text/javascript" src="./jqwidgets/noty/layouts/top.js"></script>
+	<script type="text/javascript" src="./jqwidgets/noty/layouts/topLeft.js"></script>
+	<script type="text/javascript" src="./jqwidgets/noty/layouts/topRight.js"></script>
+	<script type="text/javascript" src="./jqwidgets/noty/layouts/topCenter.js"></script>
+	<script type="text/javascript" src="./jqwidgets/noty/jquery.noty.js"></script>
+	<!-- <script type="text/javascript" src="jqwidgets/js/admin.js"></script> -->
+	
+	<!-- You can add more layouts if you want -->
+	<script type="text/javascript" src="./jqwidgets/noty/themes/default.js"></script>
+    <script type="text/javascript" src="./jqwidgets/js/dash-noty.js"></script><!-- This is a Noty bubble when you init the theme-->
+	<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="./jqwidgets/js/jquery.flexslider.js" type="text/javascript"></script>
+	
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style>
+
+  	<!-- Google Fonts call. Font Used Open Sans & Raleway -->
+	<link href="http://fonts.googleapis.com/css?family=Raleway:400,300" rel="stylesheet" type="text/css">
+  	<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#btn-blog-next").click(function() {
+			$('#blogCarousel').carousel('next')
+		});
+		$("#btn-blog-prev").click(function() {
+			$('#blogCarousel').carousel('prev')
+		});
+
+		$("#btn-client-next").click(function() {
+			$('#clientCarousel').carousel('next')
+		});
+		$("#btn-client-prev").click(function() {
+			$('#clientCarousel').carousel('prev')
+		});
+	});
+
+	$(window).load(function() {
+		$('.flexslider').flexslider({
+			animation : "slide",
+			slideshow : true,
+			start : function(slider) {
+				$('body').removeClass('loading');
+			}
+		});
+	});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$('#sunset_switch').click(function(){
+		var sunredled = $('#redon').prop('checked');
+		var sungreenled = $('#greenon').prop('checked');
+		var sunblueled = $('#blueon').prop('checked');
+		var sunwater = $('#wateron').prop('checked');
+		var sundrizzle = $('#drizzleon').prop('checked');
+		var sunpan = $('#panon').prop('checked');
+		
+		var url = "/suncmd.do?redled=";
+		if(sunredled) url+="on" : url+="off";
+		url += "&greenled=";
+		if(sungreenled) url+="on" : url+="off";
+		url += "&blueled=";
+		if(sunblueled) url+="on" : url+="off";
+		url += "&water=";
+		if(sunwater) url+="on" : url+="off";
+		url += "&drizzle=";
+		if(sundrizzle) url+="on" : url+="off";
+		url +="&pan";
+		if(sunpan) url+="on" : url+="off";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$('#cloudset_switch').click(function(){
+		var cloudredled = $('#cloudredon').prop('checked');
+		var cloudgreenled = $('#cloudgreenon').prop('checked');
+		var cloudblueled = $('#cloudblueon').prop('checked');
+		var cloudwater = $('#cloudwateron').prop('checked');
+		var clouddrizzle = $('#clouddrizzleon').prop('checked');
+		var cloudpan = $('#cloudpanon').prop('checked');
+		
+		var url = "/cloudcmd.do?redled=";
+		if(cloudredled) url+="on" : url+="off";
+		url += "&greenled=";
+		if(cloudgreenled) url+="on" : url+="off";
+		url += "&blueled=";
+		if(cloudblueled) url+="on" : url+="off";
+		url += "&water=";
+		if(cloudwater) url+="on" : url+="off";
+		url += "&drizzle=";
+		if(clouddrizzle) url+="on" : url+="off";
+		url +="&pan";
+		if(cloudpan) url+="on" : url+="off";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$('#rainset_switch').click(function(){
+		var rainredled = $('#rainredon').prop('checked');
+		var raingreenled = $('#raingreenon').prop('checked');
+		var rainblueled = $('#rainblueon').prop('checked');
+		var rainwater = $('#rainwateron').prop('checked');
+		var raindrizzle = $('#raindrizzleon').prop('checked');
+		var rainpan = $('#rainpanon').prop('checked');
+		
+		var url = "/raincmd.do?redled=";
+		if(rainredled) url+="on" : url+="off";
+		url += "&greenled=";
+		if(raingreenled) url+="on" : url+="off";
+		url += "&blueled=";
+		if(rainblueled) url+="on" : url+="off";
+		url += "&water=";
+		if(rainwater) url+="on" : url+="off";
+		url += "&drizzle=";
+		if(raindrizzle) url+="on" : url+="off";
+		url +="&pan";
+		if(rainpan) url+="on" : url+="off";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$('#snowset_switch').click(function(){
+		var snowredled = $('#snowredon').prop('checked');
+		var snowgreenled = $('#snowgreenon').prop('checked');
+		var snowblueled = $('#snowblueon').prop('checked');
+		var snowwater = $('#snowwateron').prop('checked');
+		var snowdrizzle = $('#snowdrizzleon').prop('checked');
+		var snowpan = $('#snowpanon').prop('checked');
+		
+		var url = "/snowcmd.do?redled=";
+		if(snowredled) url+="on" : url+="off";
+		url += "&greenled=";
+		if(snowgreenled) url+="on" : url+="off";
+		url += "&blueled=";
+		if(snowblueled) url+="on" : url+="off";
+		url += "&water=";
+		if(snowwater) url+="on" : url+="off";
+		url += "&drizzle=";
+		if(snowdrizzle) url+="on" : url+="off";
+		url +="&pan";
+		if(snowpan) url+="on" : url+="off";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$('#thunderset_switch').click(function(){
+		var thunderredled = $('#thunderredon').prop('checked');
+		var thundergreenled = $('#thundergreenon').prop('checked');
+		var thunderblueled = $('#thunderblueon').prop('checked');
+		var thunderwater = $('#thunderwateron').prop('checked');
+		var thunderdrizzle = $('#thunderdrizzleon').prop('checked');
+		var thunderpan = $('#thunderpanon').prop('checked');
+		
+		var url = "/thundercmd.do?redled=";
+		if(thunderredled) url+="on" : url+="off";
+		url += "&greenled=";
+		if(thundergreenled) url+="on" : url+="off";
+		url += "&blueled=";
+		if(thunderblueled) url+="on" : url+="off";
+		url += "&water=";
+		if(thunderwater) url+="on" : url+="off";
+		url += "&drizzle=";
+		if(thunderdrizzle) url+="on" : url+="off";
+		url +="&pan";
+		if(thunderpan) url+="on" : url+="off";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$('#drizzleset_switch').click(function(){
+		var drizzleredled = $('#drizzleredon').prop('checked');
+		var drizzlegreenled = $('#drizzlegreenon').prop('checked');
+		var drizzleblueled = $('#drizzleblueon').prop('checked');
+		var drizzlewater = $('#drizzlewateron').prop('checked');
+		var drizzledrizzle = $('#drizzledrizzleon').prop('checked');
+		var drizzlepan = $('#drizzlepanon').prop('checked');
+		
+		var url = "/drizzlecmd.do?redled=";
+		if(drizzleredled) url+="on" : url+="off";
+		url += "&greenled=";
+		if(drizzlegreenled) url+="on" : url+="off";
+		url += "&blueled=";
+		if(drizzleblueled) url+="on" : url+="off";
+		url += "&water=";
+		if(drizzlewater) url+="on" : url+="off";
+		url += "&drizzle=";
+		if(drizzledrizzle) url+="on" : url+="off";
+		url +="&pan";
+		if(drizzlepan) url+="on" : url+="off";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$('#extremeset_switch').click(function(){
+		var extremeredled = $('#extremeredon').prop('checked');
+		var extremegreenled = $('#extremegreenon').prop('checked');
+		var extremeblueled = $('#extremeblueon').prop('checked');
+		var extremewater = $('#extremewateron').prop('checked');
+		var extremedrizzle = $('#extremedrizzleon').prop('checked');
+		var extremewpan = $('#sextremepanon').prop('checked');
+		
+		var url = "/extremecmd.do?redled=";
+		if(extremeredled) url+="on" : url+="off";
+		url += "&greenled=";
+		if(extremegreenled) url+="on" : url+="off";
+		url += "&blueled=";
+		if(extremeblueled) url+="on" : url+="off";
+		url += "&water=";
+		if(extremewater) url+="on" : url+="off";
+		url += "&drizzle=";
+		if(extremedrizzle) url+="on" : url+="off";
+		url +="&pan";
+		if(extremepan) url+="on" : url+="off";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+});
+</script>
+
+
+
+
+<script type="text/javascript">
+$(function(){
+	$('#sun_btn').click(function(){
+		var url = "/diview.do?id=0";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#cloud_btn').click(function(){
+		var url = "/diview.do?id=1";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#rain_btn').click(function(){
+		var url = "/diview.do?id=2";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#snow_btn').click(function(){
+		var url = "/diview.do?id=3";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#thunder_btn').click(function(){
+		var url = "/diview.do?id=4";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#drizzle_btn').click(function(){
+		var url = "/diview.do?id=5";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#extreme_btn').click(function(){
+		var url = "/diview.do?id=6";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+	
+	$('#off_btn').click(function(){
+		var url = "/diview.do?id=7";
+		
+		$.ajax({
+			url: url,
+			success : function(){
+				console.log("success");
+			},
+			error : function(){
+				alert("error!");
+			}
+		});
+	});
+});
+</script>
+
+
+
+<!-- 나의 function(weather정보 가져오는) -->
+<script type="text/javascript">
+	function weatherdata() {
+			var cityname, weatherid, weathermain, citytemp, cityhumi, citytemp_min, citytemp_max, citywind, cityclouds, temp, humi;
+						
+			var url = "/main.do?";		
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				console.log(xhr.readyState);
+				console.log(xhr.status);
+				if(xhr.readyState == 4) {
+					if(xhr.status == 200) {					//응답이 왔을 때,
+						console.log(xhr.responseText);
+						var obj = JSON.parse(xhr.responseText);
+						cityname = obj.cityname;
+						weatherid = obj.weatherid;
+						weathermain = obj.weathermain;
+						citytemp = obj.citytemp;
+						cityhumi = obj.cityhumi;
+						citytemp_min = obj.citytemp_min;
+						citytemp_max = obj.citytemp_max;
+						citywind = obj.citywind;
+						cityclouds = obj.cityclouds;
+						temp = obj.temp;
+						humi = obj.humi;
+						
+						//string의 temp와 humi를 int로 바꿔줌.
+						temp *= 1;
+						humi *= 1;
+						
+						var outhumiid = document.getElementById("outhumi");
+						var inhumiid = document.getElementById("innerhumi");
+						var city_name = document.getElementById("cityname");
+						var curouttemp = document.getElementById("curouttemp");
+						var curintemp = document.getElementById("curintemp");
+						var weather_main = document.getElementById("weathermain");
+						var outtemp = document.getElementById("outtemp");
+						var max_temp = document.getElementById("max_temp");
+						var min_temp = document.getElementById("min_temp");
+						var wind_power = document.getElementById("wind_power");
+						var cloud_quanty = document.getElementById("cloud_quanty");						
+						
+						if((weatherid >= 300 && weatherid < 330) || weatherid == 721 || weatherid == 701 || weatherid == 711 ) {
+							weathermain = "안개";
+						} else if(weatherid >= 200 && weatherid < 250) {
+							weathermain = "천둥/번개";
+						} else if(weatherid >= 500 && weatherid < 550) {
+							weathermain = "비";
+						} else if(weatherid >= 600 && weatherid < 630) {
+							weathermain = "눈";
+						} else if(weatherid == 800) {
+							weathermain = "맑음";
+						} else if(weatherid >= 801 && weatherid < 810) {
+							weathermain = "구름";
+						} else if(weatherid == 900) {
+							weathermain = "토네이도";
+						} else if(weatherid == 901) {
+							weathermain = "열대폭풍";
+						} else if(weatherid == 902) {
+							weathermain = "허리케인";
+						}
+						
+						outhumiid.innerHTML = cityhumi +"%";
+						inhumiid.innerHTML = humi +"%";
+						city_name.innerHTML = cityname;
+						curouttemp.innerHTML = citytemp+"'C";
+						curintemp.innerHTML = temp+"'C";
+						weather_main.innerHTML = weathermain;
+						outtemp.innerHTML = citytemp+"'C";
+						max_temp.innerHTML = citytemp_max+"'C";
+						min_temp.innerHTML = citytemp_min+"'C";
+						wind_power.innerHTML = citywind+"m/s";
+						cloud_quanty.innerHTML = cityclouds+" [Okta]";						
+						
+						info = new Highcharts.Chart({
+							chart: {
+								renderTo: 'load',
+								margin: [0, 0, 0, 0],
+								backgroundColor: null,
+				                plotBackgroundColor: 'none',
+							},
+							title: {
+								text: null
+							},
+							tooltip: {
+								formatter: function() { 
+									return this.point.name +': '+ this.y +' %';
+								} 	
+							},
+						    series: [
+								{
+								borderWidth: 2,
+								borderColor: '#F1F3EB',
+								shadow: false,	
+								type: 'pie',
+								name: 'Income',
+								innerSize: '65%',
+								data: [
+									{ name: 'Outdoor humidity', y: cityhumi, color: '#b2c831' },
+									{ name: 'rest', y: 100-cityhumi, color: '#3d3d3d' }
+								],
+								dataLabels: {
+									enabled: false,
+									color: '#000000',
+									connectorColor: '#000000'
+								}
+							}]
+						});
+						info2 = new Highcharts.Chart({
+							chart: {
+								renderTo: 'space',
+								margin: [0, 0, 0, 0],
+								backgroundColor: null,
+				                plotBackgroundColor: 'none',
+							},
+							title: {
+								text: null
+							},
+							tooltip: {
+								formatter: function() { 
+									return this.point.name +': '+ this.y +' %';
+								} 	
+							},
+						    series: [
+								{
+								borderWidth: 2,
+								borderColor: '#F1F3EB',
+								shadow: false,	
+								type: 'pie',
+								name: 'SiteInfo',
+								innerSize: '65%',
+								data: [
+									{ name: 'indoor humidity', y: humi, color: '#fa1d2d' },
+									{ name: 'Rest', y: 100-humi, color: '#3d3d3d' }
+								],
+								dataLabels: {
+									enabled: false,
+									color: '#000000',
+									connectorColor: '#000000'
+								}
+							}]
+						});
+						
+						//////////////////////////////////////////////////////////////////////
+						$(function () {
+							 function generateNumber(min, max) {
+							    min = typeof min !== 'undefined' ? min : 1;
+							    max = typeof max !== 'undefined' ? max : 100;
+							    
+							    return Math.floor((Math.random() * max) + min);
+							  }
+							  
+							  var chart,
+							  //30개로 카테고리를 나눠서, 최대한 조밀하게 보이도록 함. data는 serie1은 내부온도, serie2는 외부온도로 한다.
+							      categories = ['Categorie 1', 'Categorie 2', 'Categorie 3', 'Categorie 4', 'Categorie 5','Categorie 6', 'Categorie 7', 'Categorie 8', 'Categorie 9', 'Categorie 10', 'Categorie 11', 'Categorie 12', 'Categorie 13', 'Categorie 14', 'Categorie 15', 'Categorie 16', 'Categorie 17', 'Categorie 18', 'Categorie 19','Categorie 20', 'Categorie 21','Categorie 22', 'Categorie 23', 'Categorie 24', 'Categorie 25', 'Categorie 26', 'Categorie 27', 'Categorie 28', 'Categorie 29', 'Categorie 30'],
+							      serie1 = [temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp, temp],
+							      serie2 = [citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp, citytemp],
+							      $aapls;
+							  $(document).ready(function() {
+							    chart = new Highcharts.Chart({
+							      chart: {
+							        renderTo: 'importantchart',
+							        type: 'column',
+							        backgroundColor: 'transparent',
+							        height: 140,
+							        marginLeft: 3,
+							        marginRight: 3,
+							        marginBottom: 0,
+							        marginTop: 0
+							      },
+							      title: {
+							        text: ''
+							      },
+							      xAxis: {
+							        lineWidth: 0,
+							        tickWidth: 0,
+							        labels: { 
+							          enabled: false 
+							        },
+							        categories: categories
+							      },
+							      yAxis: {
+							        labels: { 
+							          enabled: false 
+							        },
+							        gridLineWidth: 0,
+							        title: {
+							          text: null,
+							        },
+							      },
+							      series: [{
+							        name: 'Awesomness',
+							      //아래의 막대모양에 대한 data -> 내부 온도로 정함.
+							        data: serie1
+							      }, {
+							    	  //위쪽의 라인모양에 대한 data -> 외부 온도로 정함.
+							        name: 'More Awesomness',
+							        color: '#fff',
+							        type: 'line',
+							        data: serie2
+							      }],
+							      credits: { 
+							        enabled: false 
+							      },
+							      legend: { 
+							        enabled: false 
+							      },
+							      plotOptions: {
+							        column: {
+							          borderWidth: 0,
+							          color: '#b2c831',
+							          shadow: false
+							        },
+							        line: {
+							          marker: { 
+							            enabled: false 
+							          },
+							          lineWidth: 3
+							        }
+							      },
+							      tooltip: { 
+							        enabled: false
+							      }
+							    });
+							    
+							    setInterval(function() {
+							      chart.series[0].addPoint(citytemp, true, true);
+							      chart.series[1].addPoint(temp, true, true);
+							    }, 1000);
+							  
+							    setInterval(function() {
+							      $('.info-aapl span').each(function(index, elem) {
+							        $(elem).animate({
+							          height: generateNumber(1, 40)
+							        });
+							      });
+							    }, 3000);
+							  });
+							});
+					} else {
+						alert('Error:'+xhr.status);
+					}
+				}
+			}
+			xhr.open('GET', url, true);		//true는 비동기적으로 동작할것!
+			xhr.send();
+	}
+	weatherdata();
+	setInterval(weatherdata, 60000);
+	</script>    
+  </head>
+  <body>
+  
+  	<!-- NAVIGATION MENU -->
+
+    <div class="navbar-nav navbar-inverse navbar-fixed-top">
+        <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html"><img src="./views/img/logo30.png" alt="">Realtime Weather ViewTower</a>
+        </div> 
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="index.html"><i class="icon-home icon-white"></i> Home</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div class="container">
+	  <!-- FIRST ROW OF BLOCKS -->     
+      <div class="row">
+
+      <!-- USER PROFILE BLOCK -->
+        <div class="col-sm-3 col-lg-3">
+      		<div class="dash-unit">
+	      		<dtitle>User Profile</dtitle>
+	      		<hr>
+				<div class="thumbnail">
+					<img src="./views/img/jinwoo.jpg" alt="Jinwoo Sirius Choi" class="img-circle" width="80px" height="80px">
+				</div>
+				<h1>Choi Jinwoo</h1>
+				<h3>Suwon, Korea</h3>
+				<h3>Hankuk University</h3>
+				<h3>  of Foreign Studies</h3>
+				<!-- 
+				<h3>[스마트 커넥티드 융합기술과정 2기]</h3>
+				<h3>- 창조 아카데미 -</h3> 
+				-->
+				</div>
+        </div>
+
+      <!-- DONUT CHART BLOCK -->
+        <div class="col-sm-3 col-lg-3">
+      		<div class="half-unit">
+	      		<dtitle>현재 날씨</dtitle>
+	      		<hr>
+	      		<div class="cont">
+					<p><bold id="weathermain"></bold></p>
+				</div>
+			</div>
+			
+			<div class="half-unit">
+	      		<dtitle>최소/최대 온도</dtitle>
+	      		<hr>
+	      		<div class="cont">
+      			<p><bold id="outtemp"></bold></p> 
+      			<p><img src="./views/img/up-small.png" alt=""><span id="max_temp"></span><img src="./views/img/down-small.png" alt=""><span id="min_temp"></span></p>
+	      		</div>
+      		</div>
+        </div>
+        
+      <!-- DONUT CHART BLOCK -->
+        <div class="col-sm-3 col-lg-3">
+      		<div class="dash-unit">
+      		<dtitle>온도 (선-내부온도 / 막대-외부온도)</dtitle>
+      		<hr>
+			    <div class="section-graph">
+			      <div id="importantchart"></div>
+			      <br>
+			      <div>
+			      <div>현재 외부온도
+			        <div class="graph-info-big" id="curouttemp"></div>
+			      </div>
+			      </div>
+			      <div>
+			      <div>현재 내부온도
+			        	<div class="graph-info-big" id="curintemp"></div>
+			        </div>
+			      </div>
+			    </div>
+			</div>
+        </div>
+        
+        <div class="col-sm-3 col-lg-3">
+
+      <!-- LOCAL TIME BLOCK -->
+      		<div class="half-unit">
+	      		<dtitle>현재 시간</dtitle>
+	      		<hr>
+		      		<div class="clockcenter">
+			      		<digiclock>12:45:25</digiclock>
+		      		</div>
+			</div>
+
+      <!-- SERVER UPTIME -->
+			<div class="half-unit">
+	      		<dtitle>현재 도시</dtitle>
+	      		<hr>
+	      		<div class="cont">
+					<p><img src="./views/img/up.png" alt=""> <bold id="cityname"></bold></p>
+				</div>
+			</div>
+
+        </div>
+      </div><!-- /row -->
+      
+	  <!-- SECOND ROW OF BLOCKS -->     
+      <div class="row">
+        <div class="col-sm-3 col-lg-3">
+        <div class="dash-unit">
+		  		<dtitle>외부 습도</dtitle>
+		  		<hr>
+	        	<div id="load"></div>
+	        	<h2 id="outhumi"></h2>
+			</div>
+        
+    </div><!-- /span3 -->
+
+	  <!-- GRAPH CHART - lineandbars.js file -->     
+        <div class="col-sm-3 col-lg-3">
+        	<div class="dash-unit">
+		  		<dtitle>내부 습도</dtitle>
+		  		<hr>
+	        	<div id="space"></div>
+	        	<h2 id="innerhumi"></h2>
+			</div>
+      		
+        </div>
+
+	  <!-- LAST MONTH REVENUE -->     
+        <div class="col-sm-3 col-lg-3">
+        	<div class="half-unit">
+	      		<dtitle>풍속</dtitle>
+	      		<hr>
+	      		<div class="cont">
+					<p><bold id="wind_power"></bold></p>
+				</div>
+		             <div class="progress">
+				        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%;"><span class="sr-only"></span>
+				        </div>
+				     </div>
+      		</div>
+      		
+      		<div class="half-unit">
+	      		<dtitle>구름 양</dtitle>
+	      		<hr>
+	      		<div class="cont">
+      			<p><bold id="cloud_quanty"></bold></p>
+	      		</div>
+      		</div>      		
+        </div>
+        
+	  <!-- 30 DAYS STATS - CAROUSEL FLEXSLIDER -->     
+        <div class="col-sm-3 col-lg-3">
+			<div class="dash-unit">
+	      		<dtitle>View-Tower 내부 설정 (하단 메뉴)</dtitle>
+	      		<hr>
+	      		<div class="cont">
+      			<p>First) 빨강 LED 제어</p>
+      			<p>Second) 초록 LED 제어</p>
+      			<p>Third) 파랑 LED 제어</p>
+      			<p>Fourth) 강수 모터 제어</p>
+      			<p>Fifth) 안개 모터 제어</p>
+      			<p>Sixth) 바람 모터 제어</p>
+	      		</div>
+      		</div>   
+		</div>
+      </div><!-- /row -->
+     
+ 
+	  <!-- THIRD ROW OF BLOCKS -->     
+      <div class="row">
+      	<div class="col-sm-3 col-lg-3">
+      		<div class="halfdash-unit">
+	      		<dtitle>맑은 날씨 설정</dtitle>
+	      		<hr>
+	      		<div class="info-user">
+					<span aria-hidden="true" class="li_params fs2"></span>
+				</div>
+				<br>
+				<div id="sunredswitch" class="switch switch-red">
+					<input type="radio" class="switch-input" name="view" value="on" id="redon" checked="checked">
+					<label for="redon" class="switch-label switch-label-off">On</label>
+					<input type="radio" class="switch-input" name="view" value="off" id="redoff">
+					<label for="redoff" class="switch-label switch-label-on">Off</label>
+					<span class="switch-selection"></span>
+				</div>
+				
+				<div id="sungreenswitch" class="switch">
+					<input type="radio" class="switch-input" name="view2" value="gon" id="greenon" checked="checked">
+					<label for="greenon" class="switch-label switch-label-off">On</label>
+					<input type="radio" class="switch-input" name="view2" value="goff" id="greenoff">
+					<label for="greenoff" class="switch-label switch-label-on">Off</label>
+					<span class="switch-selection"></span>
+				</div>
+				
+				<div id="sunblueswitch" class="switch switch-blue">
+					<input type="radio" class="switch-input" name="view3" value="bon" id="blueon" checked="checked">
+					<label for="blueon" class="switch-label switch-label-off">On</label>
+					<input type="radio" class="switch-input" name="view3" value="boff" id="month2">
+					<label for="month2" class="switch-label switch-label-on">Off</label>
+					<span class="switch-selection"></span>
+				</div>
+								
+				<div id="sunwaterswitch" class="switch switch-red">
+					<input type="radio" class="switch-input" name="view4" value="won" id="wateron" checked="checked">
+					<label for="wateron" class="switch-label switch-label-off">On</label>
+					<input type="radio" class="switch-input" name="view4" value="woff" id="wateroff">
+					<label for="wateroff" class="switch-label switch-label-on">Off</label>
+					<span class="switch-selection"></span>
+				</div>
+				
+				<div id="sundrizzleswitch" class="switch">
+					<input type="radio" class="switch-input" name="view5" value="don" id="drizzleon" checked="checked">
+					<label for="drizzleon" class="switch-label switch-label-off">On</label>
+					<input type="radio" class="switch-input" name="view5" value="doff" id="drizzleoff">
+					<label for="drizzleoff" class="switch-label switch-label-on">Off</label>
+					<span class="switch-selection"></span>
+				</div>
+				
+				<div id="sunpanswitch" class="switch switch-blue">
+					<input type="radio" class="switch-input" name="view6" value="pon" id="panon" checked="checked">
+					<label for="panon" class="switch-label switch-label-off">On</label>
+					<input type="radio" class="switch-input" name="view6" value="poff" id="panoff">
+					<label for="panoff" class="switch-label switch-label-on">Off</label>
+					<span class="switch-selection"></span>
+				</div>
+				<button id="sunset_switch" class="btn btn-sm btn-primary">맑음 설정</button>
+				</div>
+			</div>
+
+
+			<div class="col-sm-3 col-lg-3">
+				<div class="halfdash-unit">
+					<dtitle>흐림 날씨 설정</dtitle>
+					<hr>
+					<div class="info-user">
+						<span aria-hidden="true" class="li_params fs2"></span>
+					</div>
+					<br>
+					<div id="cloudredswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="cloudview"
+							value="on" id="cloudredon" checked="checked"> <label
+							for="cloudredon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="cloudview"
+							value="off" id="cloudredoff"> <label for="cloudredoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+					<div id="cloudgreenswitch" class="switch">
+						<input type="radio" class="switch-input" name="cloudview2"
+							value="gon" id="cloudgreenon" checked="checked"> <label
+							for="cloudgreenon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="cloudview2"
+							value="goff" id="cloudgreenoff"> <label
+							for="cloudgreenoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="cloudblueswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="cloudview3"
+							value="bon" id="cloudblueon" checked="checked"> <label
+							for="cloudblueon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="cloudview3"
+							value="boff" id="cloudmonth2"> <label for="cloudmonth2"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+
+					<div id="cloudwaterswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="cloudview4"
+							value="won" id="cloudwateron" checked="checked"> <label
+							for="cloudwateron" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="cloudview4"
+							value="woff" id="cloudwateroff"> <label
+							for="cloudwateroff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="clouddrizzleswitch" class="switch">
+						<input type="radio" class="switch-input" name="cloudview5"
+							value="don" id="clouddrizzleon" checked="checked"> <label
+							for="clouddrizzleon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="cloudview5"
+							value="doff" id="clouddrizzleoff"> <label
+							for="clouddrizzleoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="cloudpanswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="cloudview6"
+							value="pon" id="cloudpanon" checked="checked"> <label
+							for="cloudpanon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="cloudview6"
+							value="poff" id="cloudpanoff"> <label for="cloudpanoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+					<button id="cloudset_switch" class="btn btn-sm btn-primary">흐림 설정</button>
+				</div>
+			</div>
+			
+			<div class="col-sm-3 col-lg-3">
+				<div class="halfdash-unit">
+					<dtitle>비 날씨 설정</dtitle>
+					<hr>
+					<div class="info-user">
+						<span aria-hidden="true" class="li_params fs2"></span>
+					</div>
+					<br>
+					<div id="rainredswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="rainview"
+							value="on" id="cloudredon" checked="checked"> <label
+							for="rainredon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="rainview"
+							value="off" id="rainredoff"> <label for="rainredoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+					<div id="raingreenswitch" class="switch">
+						<input type="radio" class="switch-input" name="rainview2"
+							value="gon" id="raingreenon" checked="checked"> <label
+							for="raingreenon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="rainview2"
+							value="goff" id="raingreenoff"> <label
+							for="raingreenoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="rainblueswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="rainview3"
+							value="bon" id="rainblueon" checked="checked"> <label
+							for="rainblueon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="rainview3"
+							value="boff" id="rainmonth2"> <label for="rainmonth2"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+
+					<div id="rainwaterswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="rainview4"
+							value="won" id="rainwateron" checked="checked"> <label
+							for="rainwateron" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="rainview4"
+							value="woff" id="rainwateroff"> <label
+							for="rainwateroff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="raindrizzleswitch" class="switch">
+						<input type="radio" class="switch-input" name="rainview5"
+							value="don" id="raindrizzleon" checked="checked"> <label
+							for="raindrizzleon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="rainview5"
+							value="doff" id="raindrizzleoff"> <label
+							for="raindrizzleoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="rainpanswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="rainview6"
+							value="pon" id="rainpanon" checked="checked"> <label
+							for="rainpanon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="rainview6"
+							value="poff" id="rainpanoff"> <label for="rainpanoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+					<button id="rainset_switch" class="btn btn-sm btn-primary">비 설정</button>
+				</div>
+			</div>
+			
+			<div class="col-sm-3 col-lg-3">
+				<div class="halfdash-unit">
+					<dtitle>눈 날씨 설정</dtitle>
+					<hr>
+					<div class="info-user">
+						<span aria-hidden="true" class="li_params fs2"></span>
+					</div>
+					<br>
+					<div id="snowredswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="snowview"
+							value="on" id="snowredon" checked="checked"> <label
+							for="snowredon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="snowview"
+							value="off" id="snowredoff"> <label for="snowedoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+					<div id="snowgreenswitch" class="switch">
+						<input type="radio" class="switch-input" name="snowview2"
+							value="gon" id="snowgreenon" checked="checked"> <label
+							for="snowgreenon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="snowview2"
+							value="goff" id="snowgreenoff"> <label
+							for="snowgreenoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="snowblueswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="snowview3"
+							value="bon" id="snowblueon" checked="checked"> <label
+							for="snowblueon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="snowview3"
+							value="boff" id="snowmonth2"> <label for="snowmonth2"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+
+					<div id="snowwaterswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="snowview4"
+							value="won" id="snowwateron" checked="checked"> <label
+							for="snowwateron" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="snowview4"
+							value="woff" id="snowwateroff"> <label
+							for="snowwateroff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="snowdrizzleswitch" class="switch">
+						<input type="radio" class="switch-input" name="snowview5"
+							value="don" id="snowdrizzleon" checked="checked"> <label
+							for="snowdrizzleon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="snowview5"
+							value="doff" id="snowdrizzleoff"> <label
+							for="snowdrizzleoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="snowpanswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="snowview6"
+							value="pon" id="snowpanon" checked="checked"> <label
+							for="snowpanon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="snowview6"
+							value="poff" id="snowpanoff"> <label for="snowpanoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+					<button id="snowset_switch" class="btn btn-sm btn-primary">눈 설정</button>
+				</div>
+			</div>
+		</div>
+		<br>
+      	
+ 	  <!-- FOURTH ROW OF BLOCKS -->     
+		<div class="row">
+			<div class="col-sm-3 col-lg-3">
+				<div class="halfdash-unit">
+					<dtitle>천둥/번개 날씨 설정</dtitle>
+					<hr>
+					<div class="info-user">
+						<span aria-hidden="true" class="li_params fs2"></span>
+					</div>
+					<br>
+					<div id="thunderredswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="thunderview"
+							value="on" id="thunderredon" checked="checked"> <label
+							for="thunderredon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="thunderview"
+							value="off" id="thunderredoff"> <label for="thunderredoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+					<div id="thundergreenswitch" class="switch">
+						<input type="radio" class="switch-input" name="thunderview2"
+							value="gon" id="thundergreenon" checked="checked"> <label
+							for="thundergreenon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="thunderview2"
+							value="goff" id="thundergreenoff"> <label
+							for="thundergreenoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="thunderblueswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="thunderview3"
+							value="bon" id="thunderblueon" checked="checked"> <label
+							for="thunderblueon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="thunderview3"
+							value="boff" id="thundermonth2"> <label for="thundermonth2"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+
+					<div id="thunderwaterswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="thunderview4"
+							value="won" id="thunderwateron" checked="checked"> <label
+							for="thunderwateron" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="thunderview4"
+							value="woff" id="thunderwateroff"> <label
+							for="thunderwateroff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="thunderdrizzleswitch" class="switch">
+						<input type="radio" class="switch-input" name="thunderview5"
+							value="don" id="thunderdrizzleon" checked="checked"> <label
+							for="thunderdrizzleon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="thunderview5"
+							value="doff" id="thunderdrizzleoff"> <label
+							for="thunderdrizzleoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="thunderpanswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="thunderview6"
+							value="pon" id="thunderpanon" checked="checked"> <label
+							for="thunderpanon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="thunderview6"
+							value="poff" id="thunderpanoff"> <label for="thunderpanoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+					<button id="thunderset_switch" class="btn btn-sm btn-primary">천둥/번개 설정</button>
+				</div>
+			</div>
+		
+			<div class="col-sm-3 col-lg-3">
+				<div class="halfdash-unit">
+					<dtitle>안개 날씨 설정</dtitle>
+					<hr>
+					<div class="info-user">
+						<span aria-hidden="true" class="li_params fs2"></span>
+					</div>
+					<br>
+					<div id="drizzleredswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="drizzleview"
+							value="on" id="drizzleredon" checked="checked"> <label
+							for="drizzleredon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="drizzleview"
+							value="off" id="drizzleredoff"> <label for="drizzleredoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+					<div id="drizzlegreenswitch" class="switch">
+						<input type="radio" class="switch-input" name="drizzleview2"
+							value="gon" id="drizzlegreenon" checked="checked"> <label
+							for="drizzlegreenon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="drizzleview2"
+							value="goff" id="drizzlegreenoff"> <label
+							for="drizzlegreenoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="drizzleblueswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="drizzleview3"
+							value="bon" id="drizzleblueon" checked="checked"> <label
+							for="drizzleblueon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="drizzleview3"
+							value="boff" id="drizzlemonth2"> <label for="drizzlemonth2"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+					<div id="drizzlewaterswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="drizzleview4"
+							value="won" id="drizzlewateron" checked="checked"> <label
+							for="drizzlewateron" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="drizzleview4"
+							value="woff" id="drizzlewateroff"> <label
+							for="drizzlewateroff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="drizzledrizzleswitch" class="switch">
+						<input type="radio" class="switch-input" name="drizzleview5"
+							value="don" id="drizzledrizzleon" checked="checked"> <label
+							for="drizzledrizzleon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="drizzleview5"
+							value="doff" id="drizzledrizzleoff"> <label
+							for="drizzledrizzleoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="drizzlepanswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="drizzleview6"
+							value="pon" id="drizzlepanon" checked="checked"> <label
+							for="drizzlepanon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="drizzleview6"
+							value="poff" id="drizzlepanoff"> <label for="drizzlepanoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+					<button id="drizzleset_switch" class="btn btn-sm btn-primary">안개 설정</button>
+				</div>
+			</div>
+			
+			<div class="col-sm-3 col-lg-3">
+				<div class="halfdash-unit">
+					<dtitle>기상이변 날씨 설정</dtitle>
+					<hr>
+					<div class="info-user">
+						<span aria-hidden="true" class="li_params fs2"></span>
+					</div>
+					<br>
+					<div id="extremeredswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="extremeview"
+							value="on" id="extremeredon" checked="checked"> <label
+							for="extremeredon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="extremeview"
+							value="off" id="extremeredoff"> <label for="extremeredoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+					<div id="extremegreenswitch" class="switch">
+						<input type="radio" class="switch-input" name="extremeview2"
+							value="gon" id="extremegreenon" checked="checked"> <label
+							for="extremegreenon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="extremeview2"
+							value="goff" id="extremegreenoff"> <label
+							for="extremegreenoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="extremeblueswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="extremeview3"
+							value="bon" id="extremeblueon" checked="checked"> <label
+							for="extremeblueon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="extremeview3"
+							value="boff" id="extrememonth2"> <label for="extrememonth2"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+
+
+					<div id="extremewaterswitch" class="switch switch-red">
+						<input type="radio" class="switch-input" name="extremeview4"
+							value="won" id="extremewateron" checked="checked"> <label
+							for="extremewateron" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="extremeview4"
+							value="woff" id="extremewateroff"> <label
+							for="extremewateroff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="extremedrizzleswitch" class="switch">
+						<input type="radio" class="switch-input" name="extremeview5"
+							value="don" id="extremedrizzleon" checked="checked"> <label
+							for="extremedrizzleon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="extremeview5"
+							value="doff" id="extremedrizzleoff"> <label
+							for="extremedrizzleoff" class="switch-label switch-label-on">Off</label>
+						<span class="switch-selection"></span>
+					</div>
+
+					<div id="extremepanswitch" class="switch switch-blue">
+						<input type="radio" class="switch-input" name="extremeview6"
+							value="pon" id="extremepanon" checked="checked"> <label
+							for="extremepanon" class="switch-label switch-label-off">On</label>
+						<input type="radio" class="switch-input" name="extremeview6"
+							value="poff" id="extremepanoff"> <label for="extremepanoff"
+							class="switch-label switch-label-on">Off</label> <span
+							class="switch-selection"></span>
+					</div>
+					<button id="extremeset_switch" class="btn btn-sm btn-primary">기상이변 설정</button>
+				</div>
+			</div>
+					
+		<div class="col-sm-3 col-lg-3">
+	  <!-- TOTAL SUBSCRIBERS BLOCK -->     
+      		<div class="halfdash-unit">
+	      		<dtitle>안개 분사</dtitle>
+	      		<hr>
+	      		<div class="cont">
+      				<button id="sun_btn" class="btn btn-sm btn-primary">맑은 날씨 보기</button>
+	      		</div>
+	      		<div class="cont">
+      				<button id="cloud_btn" class="btn btn-sm btn-primary">흐림 날씨 보기</button>
+      				<!-- <button id="cloud_btn" class = "btn btn-sm btn-primary">흐린 날씨</button> -->
+	      		</div>
+	      		<div class="cont">
+      				<button id="rain_btn" class="btn btn-sm btn-primary">비 날씨 보기</button>
+	      		</div>
+	      		<div class="cont">
+      				<button id="snow_btn" class="btn btn-sm btn-primary">눈 날씨 보기</button>
+	      		</div>
+	      		<div class="cont">
+      				<button id="thunder_btn" class="btn btn-sm btn-primary">천둥/번개 날씨 보기</button>
+	      		</div>
+	      		<div class="cont">
+      				<button id="drizzle_btn" class="btn btn-sm btn-primary">안개 날씨 보기</button>
+	      		</div>
+	      		<div class="cont">
+      				<button id="extreme_btn" class="btn btn-sm btn-primary">기상이변 날씨 보기</button>
+	      		</div>
+	      		<div class="cont">
+      				<button id="off_btn" class="btn btn-sm btn-primary">전부 OFF</button>
+	      		</div>
+      		</div>
+      	</div>
+
+ 	  <!-- ACCORDION BLOCK --> <!-- Modal -->     			
+			<div class="col-sm-3 col-lg-3"></div>
+		</div><!--/row -->
+		<br>
+	</div> <!-- /container -->
+    <script type="text/javascript" src="./jqwidgets/js/admin.js"></script>
+</body>
+</html>

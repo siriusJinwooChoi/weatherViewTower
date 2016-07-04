@@ -1,0 +1,65 @@
+@CHARSET "EUC-KR";
+
+body {
+	background-color: black;
+}
+
+img {
+	left:30%; 
+	top:100px;
+	width: 177px;
+	height: 524px;
+	position: relative;
+	display:inline;
+	-webkit-transition: width 1s; /* For Safari 3.1 to 6.0 */
+    transition: width 1s;
+}
+img:hover {
+    width: 200px;
+}
+
+#maintext a {
+	display:inline; 
+	position:relative; 
+	left:45%;
+	font-size:60px; 
+	/* color:white; */
+	-webkit-animation-name: example; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+    -webkit-animation-delay: 2s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: 100; /* Chrome, Safari, Opera */
+    animation-name: example;
+    animation-duration: 4s;
+    animation-delay: 2s;
+    animation-iteration-count: 100;
+	
+}
+
+#maintext a:HOVER {
+	/* -webkit-animation-name: example; Chrome, Safari, Opera
+    -webkit-animation-duration: 4s; Chrome, Safari, Opera
+    -webkit-animation-delay: 2s; Chrome, Safari, Opera
+    -webkit-animation-iteration-count: 100; Chrome, Safari, Opera
+    animation-name: example;
+    animation-duration: 4s;
+    animation-delay: 2s;
+    animation-iteration-count: 100; */
+}
+
+@-webkit-keyframes example {
+    0%   {color:red;}
+    25%  {color:yellow;}
+    50%  {color:blue;}
+    75%  {color:green;}
+    100% {color:red;}
+	
+}
+
+/* Standard syntax */
+@keyframes example {
+    0%   {color:red;}
+    25%  {color:yellow;}
+    50%  {color:blue;}
+    75%  {color:green;}
+    100% {color:red;}
+}

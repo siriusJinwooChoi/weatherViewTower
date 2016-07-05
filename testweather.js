@@ -35,18 +35,18 @@ var connection = mysql.createConnection({
 	host : '127.0.0.1',
 	port : 3306,
 	user : 'root',
-	password : 'mysql',
-	database : 'wcdb'
+	password : 'YOUR PASSWORD',
+	database : 'YOUR DB NAME'
 });
 
 // GCM Push
 var gcm = require('node-gcm');
 var message = new gcm.Message();
-var server_api_key = 'AIzaSyB7jsEM749hkWjjBTlwk76SuxuFrN6jpwA';
+var server_api_key = 'YOUR GCM SERVER API KEY';
 var sender = new gcm.Sender(server_api_key);
 var registrationIds = [];
 
-var token = 'eoa7lkPXwrk:APA91bHvPrnWYLUqJWjR8YzA_oQC6xgViCfJETWh7glMmR6xNBFS18EecHYqwMeAznQcFp7rFAcGeGut8p66FM3iywIqHvaa85VgVUBTtQ40B-b8Kl3niU10JM9bQAHsTvS8zjvqYFDM';
+var token = 'YOUR GCM TOKEN VALUE';
 
 registrationIds.push(token);
 
@@ -110,7 +110,7 @@ var citytime21, citytemp21, cityhumi21, citymain21, cityid21;
 // Store to variable. (by using openweather API)
 //repeat http.get request (as setInterval)
 function currentInfo() {	
-	var urlCurr = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityname + '&mode=json&units=metric&APPID=9b257482945770720bba08e66b3dcfac';
+	var urlCurr = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityname + '&mode=json&units=metric&APPID=Your Openweather API Key';
 
 	http.get(urlCurr, function(res) {
 		var body = '';
@@ -162,7 +162,7 @@ var curi = setInterval(currentInfo, 3600000);
 
 //request for 5Days(forecast)
 function weeksInfo() {
-	var urlWeek = 'http://api.openweathermap.org/data/2.5/forecast?q=' + cityname + '&mode=json&units=metric&APPID=9b257482945770720bba08e66b3dcfac';
+	var urlWeek = 'http://api.openweathermap.org/data/2.5/forecast?q=' + cityname + '&mode=json&units=metric&APPID=Your Openweather API Key';
 	
 	http.get(urlWeek, function(res) {
 		var body2 = '';
@@ -304,8 +304,8 @@ app.get('/selcity', function(req, res) {			//Total 39 cities
 	}
 	
 	//URLS for request about selected city.
-	var currUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityname + '&mode=json&units=metric&APPID=9b257482945770720bba08e66b3dcfac';
-	var weekUrl = 'http://api.openweathermap.org/data/2.5/forecast?q=' + cityname + '&mode=json&units=metric&APPID=9b257482945770720bba08e66b3dcfac';
+	var currUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityname + '&mode=json&units=metric&APPID=Your Openweather API Key';
+	var weekUrl = 'http://api.openweathermap.org/data/2.5/forecast?q=' + cityname + '&mode=json&units=metric&APPID=Your Openweather API Key';
 	
 	http.get(currUrl, function(res1) {
 		var body = '';
@@ -1660,17 +1660,6 @@ app.get('/vcontrol', function(req, res) {
 		    exec('pico2wave --wave hello.wav "Hello I am View Tower"', flow.add());
 		    var result = flow.wait();
 		    exec('aplay hello.wav', flow.add());
-		    console.log(result);    // There'll be trailing \n in the output
-		    console.log('More results like if it were sync...');
-		});
-	} else if(cmd == "love") {			//If Voice control is who love? or your love? or Eunhye etc... it just my secret event.
-		musicflag = 0;
-		musicsControl(musicflag);
-
-		asyncblock(function (flow) {
-		    exec('pico2wave --wave lover.wav "Sirius loves her"', flow.add());
-		    var result = flow.wait();
-		    exec('aplay lover.wav', flow.add());
 		    console.log(result);    // There'll be trailing \n in the output
 		    console.log('More results like if it were sync...');
 		});

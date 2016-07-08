@@ -5,7 +5,7 @@
 
 
 ## Usage
-
+Using Openweather API (about Weather API).
 
 
 ## Developing

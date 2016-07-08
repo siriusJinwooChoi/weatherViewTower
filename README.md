@@ -1,6 +1,6 @@
 # weatherPro
 
-Real-time Weather ViewTower Project -> Server(Node.js) + HTML + CSS + Javascript + MySQL + Raspberry PI 2 Model B + Devices(RGB LED, Motors, DHT11 Sensor, Speaker, etc...)
+Real-time Weather ViewTower Project -> Server(Node.js) + HTML + CSS + Javascript + MySQL(in Raspberry PI) + Raspberry PI 2 Model B + Devices(RGB LED, Motors, DHT11 Sensor, Speaker, etc...)
 
 
 ## Usage
@@ -18,7 +18,7 @@ plus, Modify Your Project name + etc.. in my code.
 
 In my project, The Server must be running first.
 
-You should use the Mysql, And it should be pre-connected to the Device Raspberry.(about DHT11 Sensor, LED, Motors, Speaker, other Devices...)
+You should install the Mysql in Raspberry PI, And it should be pre-connected to the Device Raspberry.(about DHT11 Sensor, LED, Motors, Speaker, other Devices...)
 
 
 ## Developing
